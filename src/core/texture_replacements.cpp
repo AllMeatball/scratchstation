@@ -77,40 +77,6 @@ const TextureReplacementTexture* TextureReplacements::GetVRAMWriteReplacement(u3
   return LoadTexture(it->second);
 }
 
-void TextureReplacements::DumpVRAMWrite(u32 width, u32 height, const void* pixels)
-{
-  std::string filename = GetVRAMWriteDumpFilename(width, height, pixels);
-  if (filename.empty())
-    return;
-
-  Common::RGBA8Image image;
-  image.SetSize(width, height);
-
-  const u16* src_pixels = reinterpret_cast<const u16*>(pixels);
-
-  for (u32 y = 0; y < height; y++)
-  {
-    for (u32 x = 0; x < width; x++)
-    {
-      image.SetPixel(x, y, VRAMRGBA5551ToRGBA8888(*src_pixels));
-      src_pixels++;
-    }
-  }
-
-  if (g_settings.texture_replacements.dump_vram_write_force_alpha_channel)
-  {
-    for (u32 y = 0; y < height; y++)
-    {
-      for (u32 x = 0; x < width; x++)
-        image.SetPixel(x, y, image.GetPixel(x, y) | 0xFF000000u);
-    }
-  }
-
-  Log_InfoPrintf("Dumping %ux%u VRAM write to '%s'", width, height, filename.c_str());
-  if (!Common::WriteImageToFile(image, filename.c_str()))
-    Log_ErrorPrintf("Failed to dump %ux%u VRAM write to '%s'", width, height, filename.c_str());
-}
-
 void TextureReplacements::Shutdown()
 {
   m_texture_cache.clear();

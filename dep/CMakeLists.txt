@@ -1,6 +1,5 @@
 add_subdirectory(glad)
 add_subdirectory(stb)
-set(MINIZ_DEFLATE_APIS ON CACHE BOOL "" FORCE) # Enable compression support.
 add_subdirectory(libchdr EXCLUDE_FROM_ALL)
 add_subdirectory(xxhash)
 add_subdirectory(glslang)

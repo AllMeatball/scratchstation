@@ -92,6 +92,5 @@ private:
 using RGBA8Image = Image<u32>;
 
 bool LoadImageFromFile(Common::RGBA8Image* image, const char* filename);
-bool WriteImageToFile(const Common::RGBA8Image& image, const char* filename);
 
 } // namespace Common
