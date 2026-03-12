@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-#include "zlib.h"
+#include "miniz.h"
 
 // https://github.com/nothings/stb/issues/113
 static unsigned char* compress_for_stbiw(unsigned char* data, int data_len, int* out_len, int quality)
