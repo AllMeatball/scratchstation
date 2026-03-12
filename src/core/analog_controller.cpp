@@ -658,7 +658,7 @@ void AnalogController::LoadSettings(const char* section)
   m_force_analog = g_host_interface->GetBoolSettingValue(section, "ForceAnalog", false);
   m_analog_dpad_in_digital_mode = g_host_interface->GetBoolSettingValue(section, "AnalogDPadInDigitalMode", false);
   m_axis_scale =
-    std::clamp(std::abs(g_host_interface->GetFloatSettingValue(section, "AxisScale", 1.00f)), 0.01f, 1.50f);
+    std::clamp(std::abs(g_host_interface->GetFloatSettingValue(section, "AxisScale", 1.33f)), 0.01f, 1.50f);
   m_rumble_bias =
     static_cast<u8>(std::min<u32>(g_host_interface->GetIntSettingValue(section, "VibrationBias", 8), 255));
 }

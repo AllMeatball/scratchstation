@@ -248,5 +248,5 @@ u32 AnalogJoystick::StaticGetVibrationMotorCount()
 void AnalogJoystick::LoadSettings(const char* section)
 {
   Controller::LoadSettings(section);
-  m_axis_scale = std::clamp(g_host_interface->GetFloatSettingValue(section, "AxisScale", 1.00f), 0.01f, 1.50f);
+  m_axis_scale = std::clamp(g_host_interface->GetFloatSettingValue(section, "AxisScale", 1.33f), 0.01f, 1.50f);
 }
