@@ -50,7 +50,7 @@ Hash GetHash(const Image& image);
 std::optional<Image> LoadImageFromFile(const char* filename);
 
 const ImageInfo* GetImageInfoForHash(const Hash& hash);
-bool IsValidHashForRegion(ConsoleRegion region, const Hash& hash);
+const ImageInfo* GetImageInfo(const Image& image);
 
 void PatchBIOS(u8* image, u32 image_size, u32 address, u32 value, u32 mask = UINT32_C(0xFFFFFFFF));
 
