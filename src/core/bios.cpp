@@ -70,11 +70,11 @@ static const ImageInfo s_image_infos[27] = {
    {"PS3 (v5.0 06-23-03 A)", ConsoleRegion::Auto, MakeHashFromString("c02a6fbb1b27359f84e92fae8bc21316"), false},
    {"PS3 (v5.0 06-23-03 A)", ConsoleRegion::Auto, MakeHashFromString("81bbe60ba7a3d1cea1d48c14cbcc647b"), false}};
 
-Hash GetHash(const Image& image)
+Hash GetHash(const u8 *image, size_t image_size)
 {
   Hash hash;
   MD5Digest digest;
-  digest.Update(image.data(), static_cast<u32>(image.size()));
+  digest.Update(image, image_size);
   digest.Final(hash.bytes);
   return hash;
 }
@@ -126,7 +126,7 @@ const ImageInfo* GetImageInfo(const Image& image)
   if (std::equal(openbios_magic.begin(), openbios_magic.end(), image.begin() + 0x78))
     return &openbios_info;
 
-  return GetImageInfoForHash(GetHash(image));
+  return GetImageInfoForHash(GetHash(image.data(), image.size()));
 }
 
 void PatchBIOS(u8* image, u32 image_size, u32 address, u32 value, u32 mask /*= UINT32_C(0xFFFFFFFF)*/)

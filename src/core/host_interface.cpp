@@ -226,8 +226,7 @@ std::optional<std::vector<u8>> HostInterface::FindBIOSImageInDirectory(ConsoleRe
 
   if (!fallback_image.has_value())
   {
-    g_host_interface->ReportFormattedError(
-      g_host_interface->TranslateString("HostInterface", "No BIOS image found for %s region"),
+    Log_InfoPrintf("No BIOS image found for %s region",
       Settings::GetConsoleRegionDisplayName(region));
     return std::nullopt;
   }
@@ -236,7 +235,7 @@ std::optional<std::vector<u8>> HostInterface::FindBIOSImageInDirectory(ConsoleRe
     return std::nullopt;
 
   Log_WarningPrintf("Falling back to possibly-incompatible image '%s': %s", fallback_path.c_str(),
-		  fallback_info->description);
+    fallback_info->description);
 
   return fallback_image;
 }

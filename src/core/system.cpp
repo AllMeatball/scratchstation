@@ -25,6 +25,7 @@
 #include "mdec.h"
 #include "memory_card.h"
 #include "multitap.h"
+#include "openbios.bin.h"
 #include "pad.h"
 #include "pgxp.h"
 #include "psf_loader.h"
@@ -665,13 +666,6 @@ bool Boot(const SystemBootParameters& params)
 
   // Load BIOS image.
   std::optional<BIOS::Image> bios_image = g_host_interface->GetBIOSImage(s_region);
-  if (!bios_image)
-  {
-    g_host_interface->ReportFormattedError(g_host_interface->TranslateString("System", "Failed to load %s BIOS."),
-                                           Settings::GetConsoleRegionName(s_region));
-    Shutdown();
-    return false;
-  }
 
   // Notify change of disc.
   UpdateRunningGame(media ? media->GetFileName().c_str() : params.filename.c_str(), media.get());
@@ -699,14 +693,19 @@ bool Boot(const SystemBootParameters& params)
     return false;
   }
 
-  Bus::SetBIOS(*bios_image);
+  // Load built-in copy of OpenBIOS if no BIOS could be found.
+  if (bios_image)
+    Bus::SetBIOS(bios_image->data(), bios_image->size());
+  else
+    Bus::SetBIOS(openbios, sizeof(openbios));
+
   UpdateControllers();
   UpdateMemoryCardTypes();
   UpdateMultitaps();
   Reset();
 
   // Enable tty by patching bios.
-  const BIOS::Hash bios_hash = BIOS::GetHash(*bios_image);
+  const BIOS::Hash bios_hash = BIOS::GetHash(Bus::g_bios, Bus::BIOS_SIZE);
   if (g_settings.bios_patch_tty_enable)
     BIOS::PatchBIOSEnableTTY(Bus::g_bios, Bus::BIOS_SIZE, bios_hash);
 

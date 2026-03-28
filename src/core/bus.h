@@ -62,7 +62,7 @@ void UpdateFastmemViews(CPUFastmemMode mode);
 bool CanUseFastmemForAddress(VirtualMemoryAddress address);
 
 void SetExpansionROM(std::vector<u8> data);
-void SetBIOS(const std::vector<u8>& image);
+void SetBIOS(const u8 *image, size_t image_size);
 
 extern std::bitset<RAM_8MB_CODE_PAGE_COUNT> m_ram_code_bits;
 extern u8* g_ram;            // 2MB-8MB RAM

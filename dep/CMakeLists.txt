@@ -5,6 +5,7 @@ add_subdirectory(xxhash)
 add_subdirectory(glslang)
 add_subdirectory(vulkan-loader)
 add_subdirectory(libretro-common)
+add_subdirectory(openbios)
 
 if(${CPU_ARCH} STREQUAL "aarch32" OR ${CPU_ARCH} STREQUAL "aarch64")
   add_subdirectory(vixl)
