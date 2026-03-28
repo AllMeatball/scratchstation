@@ -7,7 +7,6 @@
 #include "host_interface.h"
 #include "interrupt_controller.h"
 #include "settings.h"
-#include "stb_image_write.h"
 #include "system.h"
 #include "timers.h"
 #include <cmath>

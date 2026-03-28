@@ -2,7 +2,7 @@
 #include "bios.h"
 #include "common/file_system.h"
 #include "system.h"
-#include "zlib.h"
+#include "miniz.h"
 #include <cctype>
 #include <cstring>
 

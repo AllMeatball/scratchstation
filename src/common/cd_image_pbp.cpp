@@ -6,7 +6,7 @@
 #include "pbp_types.h"
 #include "string.h"
 #include "string_util.h"
-#include "zlib.h"
+#include "miniz.h"
 #include <array>
 #include <cstdio>
 #include <vector>
