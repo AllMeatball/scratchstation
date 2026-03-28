@@ -357,7 +357,7 @@ bool ShaderCache::FlushPipelineCache()
 
   // Save disk writes if it hasn't changed, think of the poor SSDs.
   int32_t sd_size = path_get_size(m_pipeline_cache_filename.c_str());
-  if (sd_size == -1 || sd_size != static_cast<u64>(data_size))
+  if (sd_size == -1 || static_cast<size_t>(sd_size) != data_size)
   {
     Log_InfoPrintf("Writing %zu bytes to '%s'", data_size, m_pipeline_cache_filename.c_str());
     if (!FileSystem::WriteBinaryFile(m_pipeline_cache_filename.c_str(), data.data(), data.size()))

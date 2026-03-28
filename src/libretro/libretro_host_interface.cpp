@@ -1061,7 +1061,7 @@ std::string LibretroHostInterface::GetBIOSDirectory()
   // Assume BIOS files are located in system directory.
   const char* system_directory = nullptr;
   if (!g_retro_environment_callback(RETRO_ENVIRONMENT_GET_SYSTEM_DIRECTORY, &system_directory))
-    return nullptr;
+    return {};
   return system_directory;
 }
 

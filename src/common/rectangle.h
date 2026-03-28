@@ -49,7 +49,10 @@ struct Rectangle
   /// Assignment operator.
   constexpr Rectangle& operator=(const Rectangle& rhs)
   {
-    std::memcpy(this, &rhs, sizeof(Rectangle));
+    left = rhs.left;
+    top = rhs.top;
+    right = rhs.right;
+    bottom = rhs.bottom;
     return *this;
   }
 
