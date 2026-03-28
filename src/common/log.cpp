@@ -163,7 +163,7 @@ static ALWAYS_INLINE void FormatLogMessageAndPrintW(const char* channelName, con
   char* message_buf = buf;
   int message_len;
   if ((message_len = FormatLogMessageForDisplay(message_buf, sizeof(buf), channelName, functionName, level, message,
-                                                timestamp, ansi_color_code, newline)) > (sizeof(buf) - 1))
+                                                timestamp, ansi_color_code, newline)) > static_cast<int>(sizeof(buf) - 1))
   {
     message_buf = static_cast<char*>(std::malloc(message_len + 1));
     message_len = FormatLogMessageForDisplay(message_buf, message_len + 1, channelName, functionName, level, message,
@@ -177,7 +177,7 @@ static ALWAYS_INLINE void FormatLogMessageAndPrintW(const char* channelName, con
   wchar_t wbuf[512];
   wchar_t* wmessage_buf = wbuf;
   int wmessage_buflen = countof(wbuf) - 1;
-  if (message_len >= countof(wbuf))
+  if (message_len >= static_cast<int>(countof(wbuf)))
   {
     wmessage_buflen = message_len;
     wmessage_buf = static_cast<wchar_t*>(std::malloc((wmessage_buflen + 1) * sizeof(wchar_t)));

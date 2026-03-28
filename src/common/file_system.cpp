@@ -573,8 +573,8 @@ static u32 RecursiveFindFiles(const char* OriginPath, const char* ParentPath, co
         // recurse into this directory
         if (ParentPath != nullptr)
         {
-          const char *recurseDir = StringUtil::StdStringFromFormat("%s\\%s", ParentPath, Path).c_str();
-          nFiles += RecursiveFindFiles(OriginPath, recurseDir, utf8_filename, Pattern, Flags, pResults);
+          std::string recursiveDir = StringUtil::StdStringFromFormat("%s\\%s", ParentPath, Path);
+          nFiles += RecursiveFindFiles(OriginPath, recursiveDir.c_str(), utf8_filename, Pattern, Flags, pResults);
         }
         else
           nFiles += RecursiveFindFiles(OriginPath, Path, utf8_filename, Pattern, Flags, pResults);

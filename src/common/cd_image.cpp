@@ -317,24 +317,8 @@ void CDImage::ClearTOC()
 void CDImage::CopyTOC(const CDImage* image)
 {
   m_lba_count = image->m_lba_count;
-  decltype(m_indices)().swap(m_indices);
-  decltype(m_tracks)().swap(m_tracks);
-  m_indices.reserve(image->m_indices.size());
-  m_tracks.reserve(image->m_tracks.size());
-
-  // Damn bitfield copy constructor...
-  for (const Index& index : image->m_indices)
-  {
-    Index new_index;
-    std::memcpy(&new_index, &index, sizeof(new_index));
-    m_indices.push_back(new_index);
-  }
-  for (const Track& track : image->m_tracks)
-  {
-    Track new_track;
-    std::memcpy(&new_track, &track, sizeof(new_track));
-    m_tracks.push_back(new_track);
-  }
+  m_indices = image->m_indices;
+  m_tracks = image->m_tracks;
   m_current_index = nullptr;
   m_position_in_index = 0;
   m_position_in_track = 0;

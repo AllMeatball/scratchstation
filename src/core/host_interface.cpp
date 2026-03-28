@@ -151,6 +151,10 @@ std::string HostInterface::GetBIOSDirectory()
 std::optional<std::vector<u8>> HostInterface::GetBIOSImage(ConsoleRegion region)
 {
   std::string bios_dir = GetBIOSDirectory();
+
+  if (bios_dir.empty())
+    return std::nullopt;
+
   std::string bios_name;
   switch (region)
   {

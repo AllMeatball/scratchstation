@@ -134,7 +134,7 @@ void CDROM::Reset()
   std::memset(&m_last_sector_header, 0, sizeof(m_last_sector_header));
   std::memset(&m_last_sector_subheader, 0, sizeof(m_last_sector_subheader));
   m_last_sector_header_valid = false;
-  std::memset(&m_last_subq, 0, sizeof(m_last_subq));
+  m_last_subq = {};
   m_last_cdda_report_frame_nibble = 0xFF;
 
   m_next_cd_audio_volume_matrix[0][0] = 0x80;
