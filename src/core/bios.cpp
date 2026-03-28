@@ -1,6 +1,7 @@
 #include "bios.h"
 #include "common/file_system.h"
 #include "common/md5_digest.h"
+#include <algorithm>
 #include <array>
 #include <cerrno>
 
@@ -24,7 +25,7 @@ static constexpr Hash MakeHashFromString(const char str[])
   return h;
 }
 
-static ImageInfo s_image_infos[27] = {
+static const ImageInfo s_image_infos[27] = {
   {"SCPH-1000, DTL-H1000 (v1.0)", ConsoleRegion::NTSC_J, MakeHashFromString("239665b1a3dade1b5a52c06338011044"), true},
    {"SCPH-1001, 5003, DTL-H1201, H3001 (v2.2 12-04-95 A)", ConsoleRegion::NTSC_U,
     MakeHashFromString("924e392ed05558ffdb115408c263dccf"), true},
@@ -115,13 +116,17 @@ const ImageInfo* GetImageInfoForHash(const Hash& hash)
   return nullptr;
 }
 
-bool IsValidHashForRegion(ConsoleRegion region, const Hash& hash)
+const ImageInfo* GetImageInfo(const Image& image)
 {
-  const ImageInfo* ii = GetImageInfoForHash(hash);
-  if (!ii)
-    return false;
+  // Hashes do not make sense for ever-evolving software such as OpenBIOS,
+  // so instead it is detected by searching for a magic number.
+  static const ImageInfo openbios_info = {"OpenBIOS", ConsoleRegion::Auto, 0, false};
+  static const std::array<u8, 8> openbios_magic = {'O', 'p', 'e', 'n', 'B', 'I', 'O', 'S'};
 
-  return (ii->region == ConsoleRegion::Auto || ii->region == region);
+  if (std::equal(openbios_magic.begin(), openbios_magic.end(), image.begin() + 0x78))
+    return &openbios_info;
+
+  return GetImageInfoForHash(GetHash(image));
 }
 
 void PatchBIOS(u8* image, u32 image_size, u32 address, u32 value, u32 mask /*= UINT32_C(0xFFFFFFFF)*/)

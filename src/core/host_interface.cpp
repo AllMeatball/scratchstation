@@ -207,13 +207,11 @@ std::optional<std::vector<u8>> HostInterface::FindBIOSImageInDirectory(ConsoleRe
     if (!found_image)
       continue;
 
-    BIOS::Hash found_hash = BIOS::GetHash(*found_image);
+    const BIOS::ImageInfo* ii = BIOS::GetImageInfo(*found_image);
 
-    const BIOS::ImageInfo* ii = BIOS::GetImageInfoForHash(found_hash);
-
-    if (BIOS::IsValidHashForRegion(region, found_hash))
+    if (ii && (ii->region == ConsoleRegion::Auto || ii->region == region))
     {
-      Log_InfoPrintf("Using BIOS '%s': %s", fd.FileName.c_str(), ii ? ii->description : "");
+      Log_InfoPrintf("Using BIOS '%s': %s", fd.FileName.c_str(), ii->description);
       return found_image;
     }
 
