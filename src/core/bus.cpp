@@ -206,10 +206,10 @@ void SetExpansionROM(std::vector<u8> data)
   m_exp1_rom = std::move(data);
 }
 
-void SetBIOS(const std::vector<u8>& image)
+void SetBIOS(const u8 *image, size_t image_size)
 {
-  if (image.size() == static_cast<u32>(BIOS_SIZE))
-    std::memcpy(g_bios, image.data(), BIOS_SIZE);
+  if (image_size == BIOS_SIZE)
+    std::memcpy(g_bios, image, BIOS_SIZE);
 }
 
 std::tuple<TickCount, TickCount, TickCount> CalculateMemoryTiming(MEMDELAY mem_delay, COMDELAY common_delay)

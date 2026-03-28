@@ -46,7 +46,7 @@ struct PSEXEHeader
 };
 #pragma pack(pop)
 
-Hash GetHash(const Image& image);
+Hash GetHash(const u8 *image, size_t image_size);
 std::optional<Image> LoadImageFromFile(const char* filename);
 
 const ImageInfo* GetImageInfoForHash(const Hash& hash);
