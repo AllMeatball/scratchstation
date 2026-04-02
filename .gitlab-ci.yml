@@ -35,6 +35,11 @@ include:
   - project: 'libretro-infrastructure/ci-templates'
     file: '/android-cmake.yml'
 
+  #################################### MISC ##################################
+  # webOS (LGTV)
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/webos-cmake.yml'
+
 # Stages for building
 stages:
   - build-prepare
@@ -104,4 +109,11 @@ android-x86_64:
 android-x86:
   extends:
     - .libretro-android-cmake-x86
+    - .core-defs
+
+#################################### MISC ####################################
+# webOS
+libretro-build-webos-armv7a:
+  extends:
+    - .libretro-webos-armv7a-cmake
     - .core-defs
