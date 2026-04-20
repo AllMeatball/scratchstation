@@ -179,8 +179,10 @@ inline void ByteScratch(u32 scratches, u8* byte)
 {
   for (u32 i = 0; i < scratches; i++)
   {
-    u8 mask = std::pow(2, random() % 9);
-    *byte &= mask;
+    u32 mask = std::pow(2, random() % 9);
+    // *byte |= mask;
+    *byte &= ~mask;
+    // printf("Applied scratch mask (%02d) (%02d)\n", byte);
   }
 }
 
@@ -189,15 +191,19 @@ void ApplyScratches(void* data, size_t length)
   // TODO: add spans and lengths of scratches
 
   // coin flip there's scratches or not (NOTE: this will probably be scratch intensity)
-  if ((random() % 2) <= 0)
+  if ((random() % 2) <= 0) {
+    // printf("no scratch\n");
     return;
+  }
 
-  u32 scratch_per_byte = (random() % 4) + 1;
+  // u32 scratch_per_byte = (random() % ) + 1;
+  u32 scratch_per_byte = 1;
 
   u8* buffer_ptr = static_cast<u8*>(data);
   for (size_t i = 0; i < length; i++)
   {
-    ByteScratch(scratch_per_byte, &buffer_ptr[i]);
+    if ((random() % 4096) == 4095)
+      ByteScratch(scratch_per_byte, &buffer_ptr[i]);
   }
 }
 
@@ -256,6 +262,8 @@ bool CDImage::ReadRawSector(void* buffer, SubChannelQ* subq)
         Seek(m_position_on_disc);
         return false;
       }
+
+      ApplyScratches(buffer, m_current_index->file_sector_size);
     }
     else
     {
