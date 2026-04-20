@@ -1,8 +1,11 @@
 #include "cd_image.h"
+#include "common/types.h"
 #include "file_system.h"
 #include "log.h"
 #include "string_util.h"
 #include <array>
+#include <cmath>
+
 Log_SetChannel(CDImage);
 
 CDImage::CDImage(OpenFlags open_flags) : m_open_flags(open_flags) {}
@@ -169,6 +172,33 @@ bool CDImage::Seek(u32 track_number, LBA lba)
 
   const Track& track = m_tracks[track_number - 1];
   return Seek(track.start_lba + lba);
+}
+
+
+inline void ByteScratch(u32 scratches, u8* byte)
+{
+  for (u32 i = 0; i < scratches; i++)
+  {
+    u8 mask = std::pow(2, random() % 9);
+    *byte &= mask;
+  }
+}
+
+void ApplyScratches(void* data, size_t length)
+{
+  // TODO: add spans and lengths of scratches
+
+  // coin flip there's scratches or not (NOTE: this will probably be scratch intensity)
+  if ((random() % 2) <= 0)
+    return;
+
+  u32 scratch_per_byte = (random() % 4) + 1;
+
+  u8* buffer_ptr = static_cast<u8*>(data);
+  for (size_t i = 0; i < length; i++)
+  {
+    ByteScratch(scratch_per_byte, &buffer_ptr[i]);
+  }
 }
 
 u32 CDImage::Read(ReadMode read_mode, u32 sector_count, void* buffer)
