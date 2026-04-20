@@ -10,6 +10,9 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMakeModules/")
 # Set minimum OS version for macOS. 10.14 should work.
 set(CMAKE_OSX_DEPLOYMENT_TARGET "10.14.0" CACHE STRING "")
 
+# Compiler commands export for clangd.
+set(CMAKE_EXPORT_COMPILE_COMMANDS on)
+
 set(USE_EGL OFF)
 set(USE_WAYLAND OFF)
 set(USE_D3D12 OFF)
