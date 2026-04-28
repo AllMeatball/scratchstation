@@ -1,5 +1,6 @@
 #include "cd_image.h"
 #include "common/types.h"
+#include "core/settings.h"
 #include "file_system.h"
 #include "log.h"
 #include "string_util.h"
@@ -255,15 +256,28 @@ bool CDImage::ReadRawSector(void* buffer, SubChannelQ* subq)
   {
     if (m_current_index->file_sector_size > 0)
     {
+      bool read_noise = rand() <= RAND_MAX * g_settings.cdrom_read_error_odds;
       // TODO: This is where we'd reconstruct the header for other mode tracks.
+
+#if 0
+      if (read_noise) Log_InfoPrintf("Read error triggered");
+
+      if (!ReadSectorFromIndex(buffer, *m_current_index, m_position_in_index) || read_noise)
+#else
+      if (read_noise) {
+        Log_InfoPrintf("Read error on LBA %u (errored on demand)", m_position_on_disc);
+        Seek(m_position_on_disc);
+        return false;
+      }
       if (!ReadSectorFromIndex(buffer, *m_current_index, m_position_in_index))
+#endif
       {
         Log_ErrorPrintf("Read of LBA %u failed", m_position_on_disc);
         Seek(m_position_on_disc);
         return false;
       }
 
-      ApplyScratches(buffer, m_current_index->file_sector_size);
+      // ApplyScratches(buffer, m_current_index->file_sector_size);
     }
     else
     {

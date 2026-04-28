@@ -147,6 +147,48 @@ struct retro_core_option_v2_definition option_defs_us[] = {
      {NULL, NULL},
    },
    "false"},
+  {"swanstation_CDROM_ReadErrorOdds",
+   "CD-ROM Read Error Odds",
+   NULL,
+   "Odds of when the CD-ROM has an LBA error",
+   NULL,
+   "console",
+   {
+     {"0.00", NULL},
+     {"0.05", NULL},
+
+     {"0.10", NULL},
+     {"0.15", NULL},
+
+     {"0.20", NULL},
+     {"0.25", NULL},
+
+     {"0.30", NULL},
+     {"0.35", NULL},
+
+     {"0.40", NULL},
+     {"0.45", NULL},
+
+     {"0.50", NULL},
+     {"0.55", NULL},
+
+     {"0.60", NULL},
+     {"0.65", NULL},
+
+     {"0.70", NULL},
+     {"0.75", NULL},
+
+     {"0.80", NULL},
+     {"0.85", NULL},
+
+     {"0.90", NULL},
+     {"0.95", NULL},
+
+     {"1.00", NULL},
+     {NULL, NULL},
+   },
+   "0.00"
+  },
   {"swanstation_CDROM_RegionCheck",
    "CD-ROM Region Check",
    NULL,

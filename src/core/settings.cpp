@@ -207,6 +207,7 @@ void Settings::Load(SettingsInterface& si)
   display_show_osd_messages = si.GetBoolValue("Display", "ShowOSDMessages", true);
 
   cdrom_readahead_sectors = static_cast<u8>(si.GetIntValue("CDROM", "ReadaheadSectors", DEFAULT_CDROM_READAHEAD_SECTORS));
+  cdrom_read_error_odds =  si.GetFloatValue("CDROM", "ReadErrorOdds", 0.0);
   cdrom_region_check = si.GetBoolValue("CDROM", "RegionCheck", false);
   cdrom_load_image_to_ram = si.GetBoolValue("CDROM", "LoadImageToRAM", false);
   cdrom_precache_chd = si.GetBoolValue("CDROM", "PreCacheCHD", false);

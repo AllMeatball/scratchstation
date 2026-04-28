@@ -55,6 +55,7 @@ struct Entry
   std::optional<u32> cpu_overclock_denominator;
   std::optional<bool> cpu_overclock_enable;
   std::optional<bool> enable_8mb_ram;
+  std::optional<float> cdrom_read_error_odds;
   std::optional<u32> cdrom_read_speedup;
   std::optional<u32> cdrom_seek_speedup;
   std::optional<DisplayCropMode> display_crop_mode;

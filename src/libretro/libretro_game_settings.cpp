@@ -26,6 +26,8 @@ void Entry::ApplySettings(bool display_osd_messages) const
   if (enable_8mb_ram.has_value())
     g_settings.enable_8mb_ram = enable_8mb_ram.value();
   g_settings.UpdateOverclockActive();
+  if (cdrom_read_error_odds.has_value())
+    g_settings.cdrom_read_error_odds = cdrom_read_error_odds.value();
   if (cdrom_read_speedup.has_value())
     g_settings.cdrom_read_speedup = cdrom_read_speedup.value();
   if (cdrom_seek_speedup.has_value())

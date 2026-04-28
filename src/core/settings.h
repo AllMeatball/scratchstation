@@ -116,6 +116,7 @@ struct Settings
   float gpu_pgxp_depth_clear_threshold = 300.0f / 4096.0f;
 
   u8 cdrom_readahead_sectors = DEFAULT_CDROM_READAHEAD_SECTORS;
+  float cdrom_read_error_odds = 0.5;
   bool cdrom_region_check = false;
   bool cdrom_load_image_to_ram = false;
   bool cdrom_precache_chd = false;
